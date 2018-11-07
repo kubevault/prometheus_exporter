@@ -81,7 +81,7 @@ require (
 	github.com/prometheus/client_model v0.0.0-20170216185247-6f3806018612 // indirect
 	github.com/prometheus/common v0.0.0-20170731114204-61f87aac8082
 	github.com/prometheus/procfs v0.0.0-20170703101242-e645f4e5aaa8 // indirect
-	github.com/prometheus/promu v0.2.0 // indirect
+	github.com/prometheus/promu v0.1.0 // indirect
 	github.com/ryanuber/go-glob v0.0.0-20170128012129-256dc444b735 // indirect
 	github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529 // indirect
 	github.com/sergi/go-diff v1.0.0 // indirect

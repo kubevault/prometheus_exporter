@@ -6,6 +6,7 @@ import (
 	vault_api "github.com/hashicorp/vault/api"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 const (
@@ -40,6 +41,18 @@ var (
 	)
 )
 
+var (
+	vaultCACert = kingpin.Flag("vault.tls-cacert",
+		"The path to a PEM-encoded CA cert file to use to verify the Vault server SSL certificate.").String()
+	vaultClientCert = kingpin.Flag("vault.tls-client-cert",
+		"The path to the certificate for Vault communication.").String()
+	vaultClientKey = kingpin.Flag("vault.tls-client-key",
+		"The path to the private key for Vault communication.").String()
+	insecureSkipVerify = kingpin.Flag("vault.insecure-skip-verify",
+		"Set SSL to ignore certificate validation.").
+		Default("false").Bool()
+)
+
 // StatusExporter collects Vault health from the given server and exports them using
 // the Prometheus metrics package.
 type StatusExporter struct {
@@ -50,12 +63,28 @@ type StatusExporter struct {
 func NewStatusExporter() (*StatusExporter, error) {
 	vaultConfig := vault_api.DefaultConfig()
 
-	tlsconfig := &vault_api.TLSConfig{
-		Insecure: true,
+	if *insecureSkipVerify {
+		tlsconfig := &vault_api.TLSConfig{
+			Insecure: true,
+		}
+		err := vaultConfig.ConfigureTLS(tlsconfig)
+		if err != nil {
+			return nil, err
+		}
 	}
-	err := vaultConfig.ConfigureTLS(tlsconfig)
-	if err != nil {
-		return nil, err
+
+	if *vaultCACert != "" || *vaultClientCert != "" || *vaultClientKey != "" {
+
+		tlsconfig := &vault_api.TLSConfig{
+			CACert:     *vaultCACert,
+			ClientCert: *vaultClientCert,
+			ClientKey:  *vaultClientKey,
+			Insecure:   *insecureSkipVerify,
+		}
+		err := vaultConfig.ConfigureTLS(tlsconfig)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	client, err := vault_api.NewClient(vaultConfig)
