@@ -1,7 +1,7 @@
 FROM  quay.io/prometheus/busybox:latest
-LABEL maintainer="The Prometheus Authors <prometheus-developers@googlegroups.com>"
+LABEL maintainer="The KubeVault Authors <hello@appscode.com>"
 
-COPY statsd_exporter /bin/statsd_exporter
+COPY vault_exporter /bin/vault_exporter
 
 EXPOSE      9102 9125 9125/udp
-ENTRYPOINT  [ "/bin/statsd_exporter" ]
+ENTRYPOINT  [ "/bin/vault_exporter" ]

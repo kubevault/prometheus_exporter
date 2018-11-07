@@ -3,7 +3,7 @@ go:
     # .circle/config.yml should also be updated.
     version: 1.11
 repository:
-    path: github.com/prometheus/statsd_exporter
+    path: github.com/kubevault/vault_exporter
 build:
     flags: -mod=vendor -a -tags 'netgo static_build'
     ldflags: |
