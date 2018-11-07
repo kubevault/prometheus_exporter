@@ -159,6 +159,12 @@ func main() {
 	log.Infof("Accepting StatsD Traffic: UDP %v, TCP %v", *statsdListenUDP, *statsdListenTCP)
 	log.Infoln("Accepting Prometheus Requests on", *listenAddress)
 
+	statusExporter, err := NewStatusExporter()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	prometheus.MustRegister(statusExporter)
+
 	go serveHTTP(*listenAddress, *metricsEndpoint)
 
 	events := make(chan Events, 1024)
