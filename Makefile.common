@@ -16,7 +16,7 @@
 # !!! Open PRs only against the prometheus/prometheus/Makefile.common repository!
 
 # Example usage :
-# Create the main Makefile in the root project directory. 
+# Create the main Makefile in the root project directory.
 # include Makefile.common
 # customTarget:
 # 	@echo ">> Running customTarget"
@@ -30,7 +30,6 @@ GOFMT        ?= $(GO)fmt
 FIRST_GOPATH := $(firstword $(subst :, ,$(shell $(GO) env GOPATH)))
 PROMU        := $(FIRST_GOPATH)/bin/promu
 STATICCHECK  := $(FIRST_GOPATH)/bin/staticcheck
-GOVENDOR     := $(FIRST_GOPATH)/bin/govendor
 pkgs          = ./...
 
 PREFIX                  ?= $(shell pwd)
@@ -38,7 +37,7 @@ BIN_DIR                 ?= $(shell pwd)
 DOCKER_IMAGE_TAG        ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
 
 .PHONY: all
-all: style staticcheck unused build test
+all: style build test
 
 .PHONY: style
 style:
@@ -80,11 +79,6 @@ vet:
 staticcheck: $(STATICCHECK)
 	@echo ">> running staticcheck"
 	$(STATICCHECK) -ignore "$(STATICCHECK_IGNORE)" $(pkgs)
-
-.PHONY: unused
-unused: $(GOVENDOR)
-	@echo ">> running check for unused packages"
-	@$(GOVENDOR) list +unused | grep . && exit 1 || echo 'No unused packages'
 
 .PHONY: build
 build: promu
