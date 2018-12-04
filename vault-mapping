@@ -1,8 +1,84 @@
 mappings:
+- match: vault.audit.*
+  name: "vault_audit"
+  labels:
+    method: "$1"
+- match: vault.audit.file.*
+  name: "vault_audit_file"
+  labels:
+    method: "$1"
 - match: vault.barrier.*
   name: "vault_barrier"
   labels:
     method: "$1"
+- match: vault.core.*
+  name: "vault_core"
+  labels:
+    method: "$1"
+- match: vault.runtime.*
+  name: "vault_runtime"
+  labels:
+    method: "$1"
+- match: vault.expire.*
+  name: "vault_expire"
+  labels:
+    method: "$1"
+- match: vault.merkle_flushdirty
+  name: "vault_merkle_flushdirty"
+- match: vault.merkle_savecheckpoint
+  name: "vault_merkle_savecheckpoint"
+- match: vault.policy.*
+  name: "vault_policy"
+  labels:
+    method: "$1"
+- match: vault.token.*
+  name: "vault_token"
+  labels:
+    method: "$1"
+- match: vault.*
+  name: "vault_wal"
+  labels:
+    method: "$1"
+- match: vault.rollback.attempt.*
+  name: "vault_rollback_attempt"
+  labels:
+    mount: "$1"
+- match: logshipper.streamWALs.*
+  name: "logshipper_streamWALs"
+  labels:
+    method: "$1"
+- match: replication.*
+  name: "replication"
+  labels:
+    method: "$1"
+- match: database.*
+  name: "database"
+  labels:
+    method: "$1"
+- match: database.*.error
+  name: "database_error"
+  labels:
+    method: "$1"
+- match: database.*.*
+  name: "database_name"
+  labels:
+    database: "$1"
+    method: "$2"
+- match: database.*.*.error
+  name: "database_named_error"
+  labels:
+    database: "$1"
+    method: "$2"
+- match: vault.*.*
+  name: "vault_storage_backend"
+  labels:
+    provider: "$1"
+    method: "$2"
+- match: vault.*.lock.*
+  name: "vault_provider_lock"
+  labels:
+    provider: "1"
+    method: "$2"
 - match: vault.consul.*
   name: "vault_consul"
   labels:
@@ -12,10 +88,6 @@ mappings:
   labels:
     method: "$1"
     path: "$2"
-- match: vault.rollback.attempt.*
-  name: "vault_rollback_attempt"
-  labels:
-    mount: "$1"
 - match: vault.*.expire.num_leases
   name: "vault_expire_num_leases"
   labels:
