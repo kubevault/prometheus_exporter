@@ -70,7 +70,7 @@ PROMU_URL     := https://github.com/prometheus/promu/releases/download/v$(PROMU_
 
 PREFIX                  ?= $(shell pwd)
 BIN_DIR                 ?= $(shell pwd)
-DOCKER_IMAGE_TAG        ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+DOCKER_IMAGE_TAG        ?= $(subst /,-,$(shell git describe --exact-match --abbrev=0 2>/dev/null || git rev-parse --abbrev-ref HEAD))
 DOCKER_REPO             ?= kubevault
 
 .PHONY: all
