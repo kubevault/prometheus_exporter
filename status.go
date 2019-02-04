@@ -1,15 +1,15 @@
 package main
 
 import (
+	"crypto/x509"
+	"fmt"
+	"net/http"
 	_ "net/http/pprof"
 
 	vault_api "github.com/hashicorp/vault/api"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
-	"gopkg.in/alecthomas/kingpin.v2"
-	"crypto/x509"
-	"net/http"
-	"fmt"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 const (
