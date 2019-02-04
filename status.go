@@ -14,12 +14,15 @@
 package main
 
 import (
+	"crypto/x509"
+	"fmt"
+	"net/http"
 	_ "net/http/pprof"
 
 	vault_api "github.com/hashicorp/vault/api"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
-	"gopkg.in/alecthomas/kingpin.v2"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 const (
@@ -56,7 +59,7 @@ var (
 
 var (
 	vaultCACert = kingpin.Flag("vault.tls-cacert",
-		"The path to a PEM-encoded CA cert file to use to verify the Vault server SSL certificate.").String()
+		"The PEM-encoded CA cert to use to verify the Vault server SSL certificate.").String()
 	vaultClientCert = kingpin.Flag("vault.tls-client-cert",
 		"The path to the certificate for Vault communication.").String()
 	vaultClientKey = kingpin.Flag("vault.tls-client-key",
@@ -89,7 +92,6 @@ func NewStatusExporter() (*StatusExporter, error) {
 	if *vaultCACert != "" || *vaultClientCert != "" || *vaultClientKey != "" {
 
 		tlsconfig := &vault_api.TLSConfig{
-			CACert:     *vaultCACert,
 			ClientCert: *vaultClientCert,
 			ClientKey:  *vaultClientKey,
 			Insecure:   *insecureSkipVerify,
@@ -97,6 +99,18 @@ func NewStatusExporter() (*StatusExporter, error) {
 		err := vaultConfig.ConfigureTLS(tlsconfig)
 		if err != nil {
 			return nil, err
+		}
+
+		clientTLSConfig := vaultConfig.HttpClient.Transport.(*http.Transport).TLSClientConfig
+		if *insecureSkipVerify {
+			clientTLSConfig.InsecureSkipVerify = true
+		} else {
+			pool := x509.NewCertPool()
+			ok := pool.AppendCertsFromPEM([]byte(*vaultCACert))
+			if !ok {
+				return nil, fmt.Errorf("error loading CA File: couldn't parse PEM data in CA bundle")
+			}
+			clientTLSConfig.RootCAs = pool
 		}
 	}
 
