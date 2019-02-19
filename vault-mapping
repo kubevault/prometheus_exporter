@@ -1,18 +1,10 @@
 mappings:
-- match: vault.audit.*
-  name: "vault_audit"
-  labels:
-    method: "$1"
 - match: vault.audit.file.*
   name: "vault_audit_file"
   labels:
     method: "$1"
 - match: vault.barrier.*
   name: "vault_barrier"
-  labels:
-    method: "$1"
-- match: vault.core.*
-  name: "vault_core"
   labels:
     method: "$1"
 - match: vault.runtime.*
@@ -31,18 +23,6 @@ mappings:
   name: "vault_policy"
   labels:
     method: "$1"
-- match: vault.token.*
-  name: "vault_token"
-  labels:
-    method: "$1"
-- match: vault.*
-  name: "vault_wal"
-  labels:
-    method: "$1"
-- match: vault.rollback.attempt.*
-  name: "vault_rollback_attempt"
-  labels:
-    mount: "$1"
 - match: logshipper.streamWALs.*
   name: "logshipper_streamWALs"
   labels:
@@ -51,29 +31,6 @@ mappings:
   name: "replication"
   labels:
     method: "$1"
-- match: database.*
-  name: "database"
-  labels:
-    method: "$1"
-- match: database.*.error
-  name: "database_error"
-  labels:
-    method: "$1"
-- match: database.*.*
-  name: "database_name"
-  labels:
-    database: "$1"
-    method: "$2"
-- match: database.*.*.error
-  name: "database_named_error"
-  labels:
-    database: "$1"
-    method: "$2"
-- match: vault.*.*
-  name: "vault_storage_backend"
-  labels:
-    provider: "$1"
-    method: "$2"
 - match: vault.*.lock.*
   name: "vault_provider_lock"
   labels:
@@ -83,17 +40,8 @@ mappings:
   name: "vault_consul"
   labels:
     method: "$1"
-- match: vault.route.*.*
-  name: "vault_route"
-  labels:
-    method: "$1"
-    path: "$2"
 - match: vault.*.expire.num_leases
   name: "vault_expire_num_leases"
-  labels:
-    host: "$1"
-- match: vault.*.runtime.alloc_bytes
-  name: "vault_runtime_alloc_bytes"
   labels:
     host: "$1"
 - match: vault.*.runtime.free_count
@@ -112,10 +60,6 @@ mappings:
   name: "vault_runtime_num_goroutines"
   labels:
     host: "$1"
-- match: vault.*.runtime.sys_bytes
-  name: "vault_runtime_sys_bytes"
-  labels:
-    host: "$1"
 - match: vault.*.runtime.total_gc_pause_ns
   name: "vault_runtime_total_gc_pause_ns"
   labels:
@@ -128,3 +72,80 @@ mappings:
   name: "vault_runtime_gc_pause_ns"
   labels:
     host: "$1"
+- match: vault.route.*.*
+  name: "vault_route"
+  labels:
+    method: "$1"
+    path: "$2"
+- match: vault.*.runtime.sys_bytes
+  name: "vault_runtime_sys_bytes"
+  labels:
+    pod: "$1"
+- match: vault.*.runtime.alloc_bytes
+  name: "vault_runtime_totaloc_bytes"
+  labels:
+    pod: "$1"
+- match: vault.database.Initialize
+  name: "vault_database_initialize_total"
+- match: vault.database.Initialize.error
+  name: "vault_database_initialize_error_total"
+- match: vault.database.*.Initialize
+  name: "vault_database_initialize"
+  labels:
+    database: "$1"
+- match: vault.database.*.Initialize.error
+  name: "vault_database_initialize_error"
+  labels:
+    database: "$1"
+- match: vault.database.CreateUser
+  name: "vault_database_user_create_total"
+- match: vault.database.CreateUser.error
+  name: "vault_database_user_create_error_total"
+- match: vault.database.*.CreateUser
+  name: "vault_database_user_create"
+  labels:
+    database: "$1"
+- match: vault.database.*.CreateUser.error
+  name: "vault_database_user_create_error"
+  labels:
+    database: "$1"
+- match: vault.database.RenewUser
+  name: "vault_database_user_renew_total"
+- match: vault.database.RenewUser.error
+  name: "vault_database_user_renew_error_total"
+- match: vault.database.*.RenewUser
+  name: "vault_database_user_renew"
+  labels:
+    database: "$1"
+- match: vault.database.*.RenewUser.error
+  name: "vault_database_user_renew_error"
+  labels:
+    database: "$1"
+- match: vault.database.RevokeUser
+  name: "vault_database_user_revoke_total"
+- match: vault.database.RevokeUser.error
+  name: "vault_database_user_revoke_error_total"
+- match: vault.database.*.RevokeUser
+  name: "vault_database_user_revoke"
+  labels:
+    database: "$1"
+- match: vault.database.*.RevokeUser.error
+  name: "vault_database_user_revoke_error"
+  labels:
+    database: "$1"
+- match: vault.database.Close
+  name: "vault_database_close_total"
+- match: vault.database.Close.error
+  name: "vault_database_close_error_total"
+- match: vault.database.*.Close
+  name: "vault_database_close"
+  labels:
+    database: "$1"
+- match: vault.database.*.Close.error
+  name: "vault_database_close_error"
+  labels:
+    database: "$1"
+- match: vault.wal_persistwals
+  name: "vault_wal_persistwals"
+- match: vault.wal_flushready
+  name: "vault_wal_flushready"
