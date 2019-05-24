@@ -6,7 +6,7 @@ language: go
 go:
 - 1.12.x
 
-go_import_path: github.com/prometheus/statsd_exporter
+go_import_path: github.com/kubevault/vault_exporter
 
 script:
 - make

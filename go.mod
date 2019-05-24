@@ -1,4 +1,4 @@
-module github.com/prometheus/statsd_exporter
+module github.com/kubevault/vault_exporter
 
 require (
 	github.com/alecthomas/assert v0.0.0-20170929043011-405dbfeb8e38 // indirect

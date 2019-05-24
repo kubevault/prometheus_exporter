@@ -22,8 +22,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	dto "github.com/prometheus/client_model/go"
 
-	"github.com/prometheus/statsd_exporter/pkg/clock"
-	"github.com/prometheus/statsd_exporter/pkg/mapper"
+	"github.com/kubevault/vault_exporter/pkg/clock"
+	"github.com/kubevault/vault_exporter/pkg/mapper"
 )
 
 // TestNegativeCounter validates when we send a negative

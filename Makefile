@@ -15,7 +15,7 @@ include Makefile.common
 
 STATICCHECK_IGNORE =
 
-DOCKER_IMAGE_NAME       ?= statsd-exporter
+DOCKER_IMAGE_NAME       ?= vault-exporter
 
 .PHONY: bench
 bench:
