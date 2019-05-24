@@ -8,6 +8,11 @@ go:
 
 go_import_path: kubevault.dev/vault_exporter
 
+cache:
+  directories:
+  - $HOME/.cache/go-build
+  - $GOPATH/pkg/mod
+
 script:
 - make
 - git diff --exit-code
