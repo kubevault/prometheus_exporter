@@ -18,12 +18,12 @@ import (
 	"io/ioutil"
 	"regexp"
 	"sync"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
-	"github.com/prometheus/statsd_exporter/pkg/mapper/fsm"
 	yaml "gopkg.in/yaml.v2"
-	"time"
+	"kubevault.dev/vault_exporter/pkg/mapper/fsm"
 )
 
 var (

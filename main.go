@@ -33,7 +33,7 @@ import (
 	"github.com/prometheus/common/version"
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/prometheus/statsd_exporter/pkg/mapper"
+	"kubevault.dev/vault_exporter/pkg/mapper"
 )
 
 func init() {

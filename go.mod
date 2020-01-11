@@ -1,4 +1,4 @@
-module github.com/prometheus/statsd_exporter
+module kubevault.dev/vault_exporter
 
 require (
 	github.com/go-kit/kit v0.9.0
