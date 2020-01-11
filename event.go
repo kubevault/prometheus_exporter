@@ -17,8 +17,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/prometheus/statsd_exporter/pkg/clock"
-	"github.com/prometheus/statsd_exporter/pkg/mapper"
+	"kubevault.dev/vault_exporter/pkg/clock"
+	"kubevault.dev/vault_exporter/pkg/mapper"
 )
 
 type Event interface {

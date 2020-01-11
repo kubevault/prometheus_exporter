@@ -17,7 +17,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/prometheus/statsd_exporter/pkg/clock"
+	"kubevault.dev/vault_exporter/pkg/clock"
 )
 
 func TestEventThresholdFlush(t *testing.T) {
