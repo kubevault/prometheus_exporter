@@ -18,7 +18,7 @@ import (
 	"testing"
 
 	"github.com/go-kit/kit/log"
-	"github.com/prometheus/statsd_exporter/pkg/mapper"
+	"kubevault.dev/vault_exporter/pkg/mapper"
 )
 
 func benchmarkUDPListener(times int, b *testing.B) {

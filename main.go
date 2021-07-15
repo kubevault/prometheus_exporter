@@ -33,7 +33,7 @@ import (
 	"github.com/prometheus/common/version"
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/prometheus/statsd_exporter/pkg/mapper"
+	"kubevault.dev/vault_exporter/pkg/mapper"
 )
 
 func init() {
@@ -171,6 +171,13 @@ func main() {
 	level.Info(logger).Log("msg", "Build context", "context", version.BuildContext())
 	level.Info(logger).Log("msg", "Accepting StatsD Traffic", "udp", *statsdListenUDP, "tcp", *statsdListenTCP, "unixgram", *statsdListenUnixgram)
 	level.Info(logger).Log("msg", "Accepting Prometheus Requests", "addr", *listenAddress)
+
+	statusExporter, err := NewStatusExporter()
+	if err != nil {
+		level.Error(logger).Log(err)
+		os.Exit(1)
+	}
+	prometheus.MustRegister(statusExporter)
 
 	go serveHTTP(*listenAddress, *metricsEndpoint, logger)
 
